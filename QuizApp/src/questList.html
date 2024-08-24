@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/questionStyle.css">
+    <link rel="stylesheet" href="./css/utilities.css">
+    <title>Soru Listesi</title>
+</head>
+<body>
+    <div class="questList">
+        <input type="text" placeholder="Soru Ara" class="searchInput">
+        <button class="btn search" onClick="searchQuestion()">Ara</button>
+        <div class="questions">
+            <!-- <div class="question">
+                <span>Soru 1</span>
+                <div>
+                    <button class="btn editPage" onClick="editQuestPage()">Düzenle</button>
+                    <button class="btn delete">Sil</button>
+                </div>
+            </div>
+            <div class="question">
+                <span>Soru 2</span>
+                <div>
+                    <button class="btn editPage" onClick="editQuestPage()">Düzenle</button>
+                    <button class="btn delete">Sil</button>
+                </div>
+            </div>
+            <div class="question">
+                <span>Soru 3</span>
+                <div>
+                    <button class="btn editPage" onClick="editQuestPage()">Düzenle</button>
+                    <button class="btn delete">Sil</button>
+                </div>
+            </div> -->
+        </div>
+        <div class="button-group">
+            <button class="btn addPage" onClick="addQuestPage()">Soru Ekle</button>
+            <button class="btn backHome" onClick="backHomePage()">Geri Dön</button>
+        </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+    <script>window.onload = getQuestions;</script>
+</body>
+</html>

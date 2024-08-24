@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/questionStyle.css">
+    <link rel="stylesheet" href="./css/utilities.css">
+    <title>Soru Düzenle</title>
+</head>
+<body>
+    <div class="editQuest">
+        <h1>Soru Düzenle</h1>
+        <div class="inputs">
+            <input type="text" id="quest" placeholder="Soru">
+            <input type="text" id="answer1" placeholder="Şık">
+            <input type="text" id="answer2" placeholder="Şık">
+            <input type="text" id="answer3" placeholder="Şık">
+            <input type="text" id="answer4" placeholder="Şık">
+            <div class="difficulty-container">
+                <label for="difficulty">Zorluk:</label>
+                <select name="difficulty" id="difficulty" class="difficulty">
+                    <option value="basic">Basit</option>
+                    <option value="medium">Orta</option>
+                    <option value="hard">Zor</option>
+                </select>
+            </div>
+            <div class="answer-container">
+                <label for="answer">Doğru Şık:</label>
+                <select name="answer" id="answer" class="answer">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="btn edit" onClick="editQuestion()">Düzenle</button>
+            <button class="btn back" onClick="backQuestPage()">Geri Dön</button>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+    <script>window.onload = formEditQuestion;</script>
+</body>
+</html>
