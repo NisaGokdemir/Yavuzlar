@@ -1,0 +1,39 @@
+.scoreBoard {
+    background-color: #000;
+    padding: 40px;
+    border-radius: 16px;
+    width: 600px;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+.scoreBoard h1{
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.scores {
+    margin-bottom: 30px;
+}
+
+.score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    color: #000;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.score span {
+    font-size: 18px;
+}
+
+.btn.backHome{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
