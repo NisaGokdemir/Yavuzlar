@@ -3,7 +3,7 @@
     ini_set('display_errors', 1);
 
     try {
-        $host = 'db';
+        $host = 'db-1';
         $dbname = 'food_management';
         $username = 'admin';
         $password = 'admin';

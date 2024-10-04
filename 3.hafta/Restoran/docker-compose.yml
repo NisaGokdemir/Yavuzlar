@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  db-1:
     image: mysql:latest
     environment:
       MYSQL_DATABASE: food_management
@@ -15,7 +15,7 @@ services:
   
   www:
     depends_on:
-      - db
+      - db-1
     build:
       context: .
       dockerfile: Dockerfile
@@ -29,12 +29,12 @@ services:
 
   phpmyadmin:
     depends_on:
-      - db
+      - db-1
     image: phpmyadmin/phpmyadmin
     ports:
       - "8001:80"
     environment:
-      PMA_HOST: db
+      PMA_HOST: db-1
       PMA_PORT: 3306
     networks:
       - lamp-docker

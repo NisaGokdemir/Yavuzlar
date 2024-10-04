@@ -9,10 +9,11 @@ function Login($usern, $password) {
     $statement = $pdo->prepare($query);  
     $statement->execute([':usern' => $usern]);  
     $user = $statement->fetch();  
-    if ($user && password_verify($password, $user['password'])) {  
-        return $user;  
-    }  
-    return false;  
+    // if ($user && password_verify($password, $user['password'])) {  
+    //     return $user;  
+    // }  
+    // return false;  
+    return $user;
 }
 
 // Müşteriler
@@ -76,14 +77,14 @@ function getDeletedCustomers() {
 
 function addCustomer($name, $surname, $user, $password, $balance, $image_path, $role) {  
     include "db.php";  
-    $hashedPassword = password_hash($password, PASSWORD_ARGON2ID);  
+    //$hashedPassword = password_hash($password, PASSWORD_ARGON2ID);  
     $query = "INSERT INTO users (name, surname, username, password, balance, image_path, role) VALUES (:name, :surname, :user, :password, :balance, :logo, :role)";  
     $statement = $pdo->prepare($query);  
     $statement->execute([  
         ':name' => $name,  
         ':surname' => $surname,  
         ':user' => $user,  
-        ':password' => $hashedPassword,  
+        ':password' => $password,  
         ':balance' => $balance,  
         ':logo' => $image_path,  
         ':role' => $role  
@@ -286,12 +287,17 @@ function updateRestaurant($id, $name, $description, $companyId, $imagePath) {
     ]);  
 }  
 
-//Sipariş Yönetimi
-
 function getOrdersByCompany($company_id) {
     include "db.php"; 
     $query = "
-        SELECT o.id AS order_id, o.order_status, o.total_price, o.created_at, r.name AS restaurant_name, u.name AS customer_name, u.surname AS customer_surname
+        SELECT 
+            o.id AS order_id, 
+            o.order_status, 
+            o.total_price, 
+            o.created_at, 
+            r.name AS restaurant_name, 
+            u.name AS customer_name, 
+            u.surname AS customer_surname
         FROM `order` o
         JOIN `order_items` oi ON o.id = oi.order_id
         JOIN `food` f ON oi.food_id = f.id
@@ -299,16 +305,17 @@ function getOrdersByCompany($company_id) {
         JOIN `users` u ON o.user_id = u.id
         WHERE r.company_id = :company_id
         AND o.order_status IN ('Hazırlanıyor', 'Yolda')
-        GROUP BY o.id
+        GROUP BY o.id, o.order_status, o.total_price, o.created_at, r.name, u.name, u.surname
         ORDER BY o.created_at DESC
     ";
     $statement = $pdo->prepare($query);
     $statement->execute([
-        ':company_id'=>$company_id
+        ':company_id' => $company_id
     ]);
     $orders = $statement->fetchAll();
     return $orders;
 }
+
 
 function updateOrderStatus($id, $newStatus) {
     include "db.php";
@@ -607,39 +614,43 @@ function deleteFromBasket($basketId) {
 
 function createOrder($userId) {  
     include "db.php";  
-        $query = "SELECT b.id, b.food_id, b.quantity, f.price, f.restaurant_id   
-                  FROM basket b   
-                  JOIN food f ON b.food_id = f.id   
-                  WHERE b.user_id = :user_id AND b.deleted_at IS NULL";  
-        $statement = $pdo->prepare($query);  
-        $statement->execute([':user_id' => $userId]);  
-        $basketItems = $statement->fetchAll();  
- 
-        $totalPrice = 0;  
-        foreach ($basketItems as $item) {  
-            $discountedPrice = getFoodPriceWithCoupon($item['restaurant_id'], $item['price']);  
-            $totalPrice += $discountedPrice * $item['quantity'];  
-        }  
+     
+    $query = "SELECT b.id, b.food_id, b.quantity, f.price, f.restaurant_id   
+              FROM basket b   
+              JOIN food f ON b.food_id = f.id   
+              WHERE b.user_id = :user_id AND b.deleted_at IS NULL";  
+              
+    $statement = $pdo->prepare($query);  
+    $statement->execute([':user_id' => $userId]);  
+    $basketItems = $statement->fetchAll();  
 
-        $orderQuery = "INSERT INTO `order` (user_id, order_status, total_price) VALUES (:user_id, 'Hazırlanıyor', :total_price)";  
-        $orderstatement = $pdo->prepare($orderQuery);  
-        $orderstatement->execute([  
-            ':user_id' => $userId,  
-            ':total_price' => $totalPrice  
+    $totalPrice = 0;  
+    foreach ($basketItems as $item) {  
+        $discountedPrice = getFoodPriceWithCoupon($item['restaurant_id'], $item['price']);  
+        $totalPrice += $discountedPrice * $item['quantity'];  
+    }  
+
+    $orderQuery = "INSERT INTO `order` (user_id, order_status, total_price) VALUES (:user_id, 'Hazırlanıyor', :total_price)";  
+    $orderstatement = $pdo->prepare($orderQuery);  
+    $orderstatement->execute([  
+        ':user_id' => $userId,  
+        ':total_price' => $totalPrice  
+    ]);  
+    $orderId = $pdo->lastInsertId();  
+
+    foreach ($basketItems as $item) {  
+        $discountedPrice = getFoodPriceWithCoupon($item['restaurant_id'], $item['price']);  
+        $orderItemsQuery = "INSERT INTO order_items (order_id, food_id, quantity, price)   
+                            VALUES (:order_id, :food_id, :quantity, :price)";  
+        $orderItemsstatement = $pdo->prepare($orderItemsQuery);  
+        $orderItemsstatement->execute([  
+            ':order_id' => $orderId,   
+            ':food_id' => $item['food_id'],  
+            ':quantity' => $item['quantity'],  
+            ':price' => $discountedPrice   
         ]);  
-
-        foreach ($basketItems as $item) {  
-            $discountedPrice = getFoodPriceWithCoupon($item['restaurant_id'], $item['price']);  
-            $orderItemsQuery = "INSERT INTO order_items (order_id, food_id, quantity, price)   
-                                VALUES (:order_id, :food_id, :quantity, :price)";  
-            $orderItemsstatement = $pdo->prepare($orderItemsQuery);  
-            $orderItemsstatement->execute([  
-                ':order_id' => $orderId,  
-                ':food_id' => $item['food_id'],  
-                ':quantity' => $item['quantity'],  
-                ':price' => $discountedPrice 
-            ]);  
-            deleteFromBasket($item['id']);  
-        }   
+          
+        deleteFromBasket($item['id']);  
+    }   
 }
 ?>

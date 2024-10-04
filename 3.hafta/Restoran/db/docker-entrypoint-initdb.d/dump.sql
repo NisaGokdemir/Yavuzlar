@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 21 Eyl 2024, 20:06:21
+-- Üretim Zamanı: 04 Eki 2024, 17:52:00
 -- Sunucu sürümü: 10.4.32-MariaDB
 -- PHP Sürümü: 8.2.12
 
@@ -49,7 +49,15 @@ INSERT INTO `basket` (`id`, `user_id`, `food_id`, `note`, `quantity`, `created_a
 (5, 3, 4, 'Allergic to nuts', 1, '2024-09-21 17:43:10', '2024-09-21 18:00:36'),
 (6, 3, 4, 'acısız olsun', 2, '2024-09-21 17:52:17', '2024-09-21 18:00:36'),
 (7, 3, 1, 'acısız olsun', 1, '2024-09-21 18:01:05', NULL),
-(8, 3, 2, 'acılı olsun', 1, '2024-09-21 18:01:14', NULL);
+(8, 3, 2, 'acılı olsun', 1, '2024-09-21 18:01:14', NULL),
+(9, 5, 1, 'deneme', 12, '2024-10-04 14:39:59', '2024-10-04 14:40:37'),
+(10, 5, 1, 'acısız olsun', 2, '2024-10-04 14:43:09', '2024-10-04 14:43:20'),
+(11, 5, 3, 'kebap', 2, '2024-10-04 14:43:15', '2024-10-04 14:43:20'),
+(12, 5, 1, 'acısız olsun', 2, '2024-10-04 14:44:42', '2024-10-04 14:44:46'),
+(13, 5, 1, 'dene', 2, '2024-10-04 14:44:58', '2024-10-04 14:45:06'),
+(14, 5, 1, 'acılı olsun', 2, '2024-10-04 15:36:59', '2024-10-04 15:37:13'),
+(15, 5, 2, 'acılı olsun', 1, '2024-10-04 15:37:06', '2024-10-04 15:37:13'),
+(16, 5, 1, 'acılı olsun', 2, '2024-10-04 15:39:21', '2024-10-04 15:39:26');
 
 -- --------------------------------------------------------
 
@@ -105,7 +113,8 @@ INSERT INTO `company` (`id`, `name`, `description`, `logo_path`, `created_at`, `
 (2, 'Company B', 'Description for Company B', './uploads/anime.png', '2024-09-21 17:41:28', NULL),
 (3, 'Company C', 'Description for Company C', './uploads/anime.png', '2024-09-21 17:41:28', NULL),
 (4, 'Company D', 'Description for Company D', './uploads/anime.png', '2024-09-21 17:41:28', NULL),
-(5, 'Company E', 'Description for Company E', './uploads/anime.png', '2024-09-21 17:41:28', NULL);
+(5, 'Company E', 'Description for Company E', './uploads/anime.png', '2024-09-21 17:41:28', NULL),
+(6, 'deneme', 'deneme', './uploads/himmel.jpg', '2024-10-04 14:36:23', '2024-10-04 14:36:27');
 
 -- --------------------------------------------------------
 
@@ -131,7 +140,8 @@ INSERT INTO `cupon` (`id`, `restaurant_id`, `name`, `discount`, `created_at`, `d
 (2, 1, 'Discount 20%', 20.00, '2024-09-21 17:42:55', NULL),
 (3, 2, 'Discount 5%', 5.00, '2024-09-21 17:42:55', NULL),
 (4, 3, 'Free Drink', 0.00, '2024-09-21 17:42:55', NULL),
-(5, 3, 'Discount 15%', 15.00, '2024-09-21 17:42:55', NULL);
+(5, 3, 'Discount 15%', 15.00, '2024-09-21 17:42:55', NULL),
+(6, NULL, 'deneme', 12.00, '2024-10-04 14:36:39', '2024-10-04 14:36:47');
 
 -- --------------------------------------------------------
 
@@ -187,7 +197,13 @@ INSERT INTO `order` (`id`, `user_id`, `order_status`, `total_price`, `created_at
 (3, 3, 'Yolda', 50.00, '2024-09-21 17:43:25', NULL),
 (4, 1, 'Teslim edildi', 10.00, '2024-09-21 17:43:25', NULL),
 (5, 2, 'Hazırlanıyor', 15.00, '2024-09-21 17:43:25', NULL),
-(6, 3, 'Hazırlanıyor', 45.00, '2024-09-21 18:00:36', NULL);
+(6, 3, 'Hazırlanıyor', 45.00, '2024-09-21 18:00:36', NULL),
+(7, 5, 'Hazırlanıyor', 108.00, '2024-10-04 14:40:37', NULL),
+(8, 5, 'Hazırlanıyor', 33.20, '2024-10-04 14:43:20', NULL),
+(9, 5, 'Hazırlanıyor', 18.00, '2024-10-04 14:44:46', NULL),
+(10, 5, 'Hazırlanıyor', 18.00, '2024-10-04 14:45:06', NULL),
+(11, 5, 'Hazırlanıyor', 31.50, '2024-10-04 15:37:13', NULL),
+(12, 5, 'Hazırlanıyor', 18.00, '2024-10-04 15:39:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +232,15 @@ INSERT INTO `order_items` (`id`, `order_id`, `food_id`, `quantity`, `price`, `de
 (5, 4, 1, 1, 10.00, NULL),
 (6, NULL, 1, 1, 9.00, NULL),
 (7, NULL, 4, 1, 12.00, NULL),
-(8, NULL, 4, 2, 12.00, NULL);
+(8, NULL, 4, 2, 12.00, NULL),
+(9, NULL, 1, 12, 9.00, NULL),
+(10, NULL, 1, 2, 9.00, NULL),
+(11, NULL, 3, 2, 7.60, NULL),
+(12, NULL, 1, 2, 9.00, NULL),
+(13, NULL, 1, 2, 9.00, NULL),
+(14, 11, 1, 2, 9.00, NULL),
+(15, 11, 2, 1, 13.50, NULL),
+(16, 12, 1, 2, 9.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -270,9 +294,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `role`, `name`, `username`, `password`, `balance`, `created_at`, `deleted_at`, `image_path`, `surname`) VALUES
-(1, NULL, 'admin', 'admin', 'admin', '$argon2id$v=19$m=65536,t=4,p=1$RThFRFRkQVVWYTNNL2hmUQ$1ToWUklOBN/kqTr9LVBGsQmhjNJArVWqqjTCFbNh5uk', 500.00, '2024-09-21 17:35:11', NULL, './uploads/anime.png', 'admin'),
-(2, NULL, 'company', 'frieren', 'frieren', '$argon2id$v=19$m=65536,t=4,p=1$a0s2ak0yeDhEQ095TGZ2VA$XJ5vbbjnsaLrJU24079kWX9XlDw8xJUDpWEbFZGNi7k', 5000.00, '2024-09-21 17:36:47', NULL, './uploads/anime.png', 'elf'),
-(3, NULL, 'customer', 'fern', 'fern', '$argon2id$v=19$m=65536,t=4,p=1$Lk9DUURsVXoyVDRtcXRSbA$r8IpVutHMDGEnpwej3h8rMBC4cg9TRqbtxy2U5Gy4u0', 4001.00, '2024-09-21 17:37:16', NULL, './uploads/anime.png', 'stark');
+(1, NULL, 'admin', 'admin', 'admin', 'admin', 500.00, '2024-09-21 17:35:11', NULL, './uploads/anime.png', 'admin'),
+(2, 2, 'company', 'frieren', 'frieren', 'frieren', 5000.00, '2024-09-21 17:36:47', NULL, './uploads/anime.png', 'elf'),
+(3, NULL, 'customer', 'fern', 'fern', 'fern', 4001.00, '2024-09-21 17:37:16', NULL, './uploads/anime.png', 'stark'),
+(4, NULL, 'admin', 'as', 'as', '$argon2id$v=19$m=65536,t=4,p=1$M0hIRHhZMm9SamFpb2luQw$fyTK4wc59ExnFHh4pRoS++A7QqbdjjBbE4y/ZxJV+sA', 1.00, '2024-10-04 14:34:43', NULL, './uploads/frieren.jpg', 'as'),
+(5, NULL, 'customer', 'customer', 'customer', '$argon2id$v=19$m=65536,t=4,p=1$ODJHS2tDVW9xbS5lVVk0Tw$9aUDo0VgulxE2/NFxLWcIZpG6QFcnI+z4yS0Pl8Zc2o', 1.00, '2024-10-04 14:39:38', NULL, './uploads/frieren.jpg', 'customer'),
+(6, NULL, 'company', 'dd', 'dd', '$argon2id$v=19$m=65536,t=4,p=1$VllQUnV0R3V4SldLRUFlVQ$tWBPWiRuA8Nyi9DG3LZGtxD2A5Sv6pNAnkAope41Cyc', 12.00, '2024-10-04 14:50:41', NULL, './uploads/himmel.jpg', 'dd');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -351,7 +378,7 @@ ALTER TABLE `users`
 -- Tablo için AUTO_INCREMENT değeri `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `comments`
@@ -363,13 +390,13 @@ ALTER TABLE `comments`
 -- Tablo için AUTO_INCREMENT değeri `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `cupon`
 --
 ALTER TABLE `cupon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `food`
@@ -381,13 +408,13 @@ ALTER TABLE `food`
 -- Tablo için AUTO_INCREMENT değeri `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `restaurant`
@@ -399,7 +426,7 @@ ALTER TABLE `restaurant`
 -- Tablo için AUTO_INCREMENT değeri `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Dökümü yapılmış tablolar için kısıtlamalar
